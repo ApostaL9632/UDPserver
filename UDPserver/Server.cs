@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using UDPServer.Models;
 
 namespace UDPserver
 {
@@ -39,6 +40,28 @@ namespace UDPserver
                         sw.Flush();
                     }
                     Console.WriteLine(message.ToJSON());
+                }
+                else if (message.Command == "Update")
+                {
+                    string IpFromMod = ModIP(message.IpFrom);
+                    string IpToMod = ModIP(message.IpTo);
+                    string fileName = GenerateFileName(IpFromMod, IpToMod);
+                    var curDir = Directory.GetCurrentDirectory();
+                    curDir = curDir.Replace("\\", "/");
+                    string file = String.Format($"{curDir}/history/{fileName}.txt");
+                    try
+                    {
+                        using var sr = new StreamReader(file, true);
+                        string pathMessage = file;
+                        byte[] messageBytes = System.IO.File.ReadAllBytes(file);
+
+                        udpClient.Send(messageBytes, new IPEndPoint(IPAddress.Parse(message.IpFrom), 34285));
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                    
                 }
             }
 

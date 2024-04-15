@@ -6,8 +6,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace UDPserver
+namespace UDPServer.Models
 {
+    
     public class Message
     {
         public string Command { get; set; }
@@ -18,11 +19,11 @@ namespace UDPserver
 
         public Message(string command, string text, string ipTo, string ipFrom)
         {
-            this.Command = command;
-            this.Text = text;
-            this.IpFrom = ipFrom;
-            this.IpTo = ipTo;
-            this.DateTime = DateTime.Now;
+            Command = command;
+            Text = text;
+            IpFrom = ipFrom;
+            IpTo = ipTo;
+            DateTime = DateTime.Now;
         }
         public string ToJSON()
         {
