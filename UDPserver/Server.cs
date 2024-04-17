@@ -5,12 +5,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using UDPServer;
 using UDPServer.Models;
 
 namespace UDPserver
 {
     public class Server
     {
+
         public static async Task AcceptMessage()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Any, 0);
@@ -39,6 +41,10 @@ namespace UDPserver
                         await sw.WriteAsync(message.ToJSON() + "\n");
                         sw.Flush();
                     }
+                    
+                    Chats chats = new Chats(fileName);
+                    chats.Messages.Add(message);
+                    MongoConector.AddChat(chats);
                     Console.WriteLine(message.ToJSON());
                 }
                 else if (message.Command == "Update")

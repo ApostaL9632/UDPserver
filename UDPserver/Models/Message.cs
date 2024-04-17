@@ -1,16 +1,21 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 
 namespace UDPServer.Models
 {
     
     public class Message
     {
+        [BsonId]
+        public ObjectId Id { get; set; }
         public string Command { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
@@ -34,5 +39,6 @@ namespace UDPServer.Models
         {
             return JsonSerializer.Deserialize<Message>(json);
         }
+
     }
 }
