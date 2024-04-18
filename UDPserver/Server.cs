@@ -36,11 +36,9 @@ namespace UDPserver
                         var curDir = Directory.GetCurrentDirectory();
                         curDir = curDir.Replace("\\","/");
                         string newFileName = String.Format($"{curDir}/history/{fileName}.txt");
-                        Chat chats = new Chat(fileName);
-                        chats.Messages.Add(message);
-                        MongoConector.AddChat(chats);
-                        Chat findChat = MongoConector.FindOneChat(chats);
-                        Console.WriteLine(findChat.Name);
+                        Chat chat = new Chat(fileName);
+                        chat.Messages.Add(message);
+                        MongoConector.UpdateData(chat);
                         // using var sw = new StreamWriter(newFileName, true);
                         //sw.Write(ipFromMod + ":" + message.Text + "\n");
                         //await sw.WriteAsync(message.ToJSON() + "\n");
