@@ -15,11 +15,21 @@ namespace UDPServer
     {
         private static MongoClient client = new MongoClient("mongodb://localhost:27017");
         private static IMongoDatabase chatDataBase = client.GetDatabase("ChatDB");
-        private static IMongoCollection<Chats> chats = chatDataBase.GetCollection<Chats>("chats");
+        private static IMongoCollection<Chat> chats = chatDataBase.GetCollection<Chat>("chats");
         //private static IMongoCollection<BsonDocument> chats = chatDataBase.GetCollection<BsonDocument>("Chats");
-        public static void AddChat(Chats chat)
+        public static void AddChat(Chat chat)
         {
             chats.InsertOne(chat);
+        }
+        public static Chat FindOneChat(Chat chat)
+        {
+            var filter = new BsonDocument { { "Name", chat.Name } };
+            var chatsArray = chats.Find(filter).ToListAsync();
+            foreach (var item in chatsArray.Result)
+            {
+                return item;
+            }
+            return null;
         }
     }
     

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 
 namespace UDPServer.Models
 {
-    public class Chats
+    public class Chat
     {
     
+        public ObjectId _id;
         public string Name;
         public List<Message> Messages = new List<Message>();
-        public Chats(string chatName) 
+        public Chat(string chatName) 
         {
             this.Name = chatName;
         }
